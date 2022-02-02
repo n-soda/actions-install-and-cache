@@ -93,6 +93,7 @@ runs:
                 ls -l $archive
             else
                 echo "no updated file found."
+                touch $archive
             fi
         else
             echo $epoch not found
