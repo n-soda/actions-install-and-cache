@@ -6,6 +6,7 @@ inputs:
   directory: { required: true,  type: string }
   cache:     { required: false, type: string, default: yes }
   cache-gen: { required: false, type: string, default: v1 }
+  key:       { required: false, type: string }
 
 outputs:
   cache-hit:
@@ -26,11 +27,12 @@ runs:
         command="${{ inputs.command }}"
         directory="${{ inputs.directory }}"
         gen="${{ inputs.cache-gen }}"
+        given_key="${{ inputs.key }}"
         md5    /dev/null > /dev/null 2>&1 && md5=md5
         md5sum /dev/null > /dev/null 2>&1 && md5=md5sum
         test "md5" != ''
         hash=$( (uname -mrsv ; echo $command $target $directory) | $md5 | awk '{print $1}' )
-        key="$hash-$gen"
+        key="$hash${given_key:+-$given_key}${gen:+-$gen}"
         [ "$cache" == 'workflow' ] && key=$key-${{ github.run_id }}
         cat << END
         ::set-output name=cache::$cache
