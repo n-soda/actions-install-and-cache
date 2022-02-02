@@ -32,8 +32,8 @@ runs:
         md5sum /dev/null > /dev/null 2>&1 && md5=md5sum
         test "md5" != ''
         hash=$( (uname -mrsv ; echo $command $target $directory) | $md5 | awk '{print $1}' )
-        key="$hash${given_key:+-$given_key}${gen:+-$gen}"
-        [ "$cache" == 'workflow' ] && key=$key-${{ github.run_id }}
+        key="${hash}${given_key:+-$given_key}${gen:+-$gen}"
+        [ "$cache" == 'workflow' ] && key="$key-${{ github.run_id }}"
         cat << END
         ::set-output name=cache::$cache
         ::set-output name=archive::$HOME/archive-$hash.tz
@@ -56,9 +56,9 @@ runs:
         ls -l $archive
         if [ -s $archive ]
         then
-          sudo tar -C / -xvzf $archive
+            sudo tar -C / -xvzf $archive
         else
-          echo "$archive is empty"
+            echo "$archive is empty"
         fi
 
     - id: install
