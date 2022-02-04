@@ -62,9 +62,10 @@ runs:
         test "${{ inputs.command }}" != ''
         test "${{ inputs.target }}" != ''
         date > $epoch
-        mount | grep '^'`df . | awk 'NR==2 {print $1}'`
-        stat $epoch
-        uname
+        type mount
+        type df
+        type stat
+        type uname
         ${{ inputs.command }} ${{ inputs.target }}
 
     - id: archive
