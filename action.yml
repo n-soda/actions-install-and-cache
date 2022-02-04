@@ -66,6 +66,7 @@ runs:
         type df
         type stat
         type uname
+        ls -al /etc
         ${{ inputs.command }} ${{ inputs.target }}
 
     - id: archive
