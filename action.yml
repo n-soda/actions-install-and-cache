@@ -62,10 +62,10 @@ runs:
         test "${{ inputs.command }}" != ''
         test "${{ inputs.target }}" != ''
         date > $epoch
-        type mount
-        type df
-        type stat
-        type uname
+        mount -a
+        df .
+        stat $epoch
+        uname -a
         ls -al /etc
         ${{ inputs.command }} ${{ inputs.target }}
 
