@@ -64,10 +64,12 @@ runs:
         date > $epoch
         mount
         df .
+        echo === $epoch ===
         stat $epoch
         uname -a
-        ls -al /etc
         ${{ inputs.command }} ${{ inputs.target }}
+        echo === ${{ inputs.directory }}/${{ inputs.target }} ===
+        stat ${{ inputs.directory }}/${{ inputs.target }}
 
     - id: archive
       if: steps.setup.outputs.cache != 'no' && steps.cache.outputs.cache-hit != 'true'
