@@ -62,7 +62,7 @@ runs:
         test "${{ inputs.command }}" != ''
         test "${{ inputs.target }}" != ''
         date > $epoch
-        mount -a
+        mount
         df .
         stat $epoch
         uname -a
